@@ -9,12 +9,12 @@ const Window = ({ title, children, onClose, onMinimize }) => {
       drag={!isMaximized}
       dragMomentum={false}
       animate={{
-        width: isMaximized ? "100vw" : "70vw",
-        height: isMaximized ? "calc(100vh - 80px)" : "70vh",
-        top: isMaximized ? 0 : "10vh",
-        left: isMaximized ? 0 : "15vw",
-        borderRadius: isMaximized ? "0px" : "28px",
-      }}
+      width: isMaximized ? "100%" : "70vw",
+      height: isMaximized ? "100%" : "70vh",
+      top: isMaximized ? 0 : "10vh",
+      left: isMaximized ? 0 : "15vw",
+      borderRadius: isMaximized ? "0px" : "28px",
+    }}
       transition={{
         type: "spring",
         stiffness: 120,
@@ -24,6 +24,7 @@ const Window = ({ title, children, onClose, onMinimize }) => {
         fixed
         flex
         flex-col
+        min-h-0
         overflow-hidden
         border
         border-white/10
@@ -75,7 +76,7 @@ const Window = ({ title, children, onClose, onMinimize }) => {
       </div>
 
       {/* CONTENT */}
-      <div className="relative flex-1 overflow-hidden">
+      <div className="relative flex-1 min-h-0 overflow-hidden">
         {children}
       </div>
     </motion.div>

@@ -50,7 +50,6 @@ const Presence = () => {
 
   const audioRef = useRef(null);
 
-  // Auto mood based on time
   useEffect(() => {
     const updateMood = () => {
       const hour = new Date().getHours();
@@ -73,14 +72,13 @@ const Presence = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Change music when mood changes
   useEffect(() => {
     if (!audioRef.current) return;
 
     audioRef.current.src = tracks[currentMood].file;
 
     if (isPlaying) {
-      audioRef.current.play();
+      audioRef.current.play().catch(() => {});
     }
   }, [currentMood]);
 
@@ -90,7 +88,7 @@ const Presence = () => {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      audioRef.current.play().catch(() => {});
     }
 
     setIsPlaying(!isPlaying);
@@ -99,7 +97,7 @@ const Presence = () => {
   const currentTrack = tracks[currentMood];
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#050816] text-white">
+    <div className="relative w-full h-full min-h-0 overflow-hidden bg-[#050816] text-white">
       {/* Background Gradient */}
       <motion.div
         animate={{
@@ -113,7 +111,7 @@ const Presence = () => {
         className={`absolute inset-0 bg-gradient-to-br ${currentTrack.gradient}`}
       />
 
-      {/* Floating Blur Orbs */}
+      {/* Blur Orbs */}
       <motion.div
         animate={{
           x: [0, 60, -30, 0],
@@ -162,13 +160,12 @@ const Presence = () => {
         />
       ))}
 
-      {/* Audio */}
       <audio ref={audioRef} autoPlay loop />
 
       {/* Main UI */}
-      <div className="relative z-10 flex h-full flex-col justify-between p-8">
+      <div className="relative z-10 flex h-full min-h-0 flex-col overflow-y-auto no-scrollbar p-8">
         {/* Top */}
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between shrink-0">
           <div>
             <h1 className="text-4xl font-semibold tracking-wide">
               Presence
@@ -179,7 +176,6 @@ const Presence = () => {
             </p>
           </div>
 
-          {/* Music Controls */}
           <button
             onClick={toggleMusic}
             className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-xl transition-all hover:bg-white/10"
@@ -194,8 +190,8 @@ const Presence = () => {
           </button>
         </div>
 
-        {/* Center Aura */}
-        <div className="flex flex-1 items-center justify-center">
+        {/* Center */}
+        <div className="flex flex-1 min-h-[500px] items-center justify-center py-10">
           <motion.div
             animate={{
               scale: [1, 1.08, 1],
@@ -207,7 +203,6 @@ const Presence = () => {
             }}
             className="relative flex h-72 w-72 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-3xl"
           >
-            {/* Rings */}
             <motion.div
               animate={{
                 scale: [1, 1.5],
@@ -232,7 +227,6 @@ const Presence = () => {
               className="absolute h-full w-full rounded-full border border-white/5"
             />
 
-            {/* Mood Content */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentMood}
@@ -258,8 +252,8 @@ const Presence = () => {
           </motion.div>
         </div>
 
-        {/* Bottom Panels */}
-        <div className="grid grid-cols-3 gap-4">
+        {/* Bottom */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 shrink-0">
           <InfoCard
             title="Presence Energy"
             value="72%"
