@@ -9,12 +9,12 @@ const Window = ({ title, children, onClose, onMinimize }) => {
       drag={!isMaximized}
       dragMomentum={false}
       animate={{
-      width: isMaximized ? "100%" : "70vw",
-      height: isMaximized ? "100%" : "70vh",
-      top: isMaximized ? 0 : "10vh",
-      left: isMaximized ? 0 : "15vw",
-      borderRadius: isMaximized ? "0px" : "28px",
-    }}
+        width: isMaximized ? "100%" : "70vw",
+        height: isMaximized ? "calc(100vh - 90px)" : "70vh",
+        top: isMaximized ? 0 : "8vh",
+        left: isMaximized ? 0 : "15vw",
+        borderRadius: isMaximized ? "0px" : "28px",
+      }}
       transition={{
         type: "spring",
         stiffness: 120,
@@ -53,9 +53,7 @@ const Window = ({ title, children, onClose, onMinimize }) => {
           backdrop-blur-xl
         "
       >
-        <h1 className="text-sm tracking-wide text-white/70">
-          {title}
-        </h1>
+        <h1 className="text-sm tracking-wide text-white/70">{title}</h1>
 
         <div className="ml-auto flex items-center gap-2">
           <button
@@ -76,9 +74,7 @@ const Window = ({ title, children, onClose, onMinimize }) => {
       </div>
 
       {/* CONTENT */}
-      <div className="relative flex-1 min-h-0 overflow-hidden">
-        {children}
-      </div>
+      <div className="relative flex-1 min-h-0 overflow-hidden">{children}</div>
     </motion.div>
   );
 };
